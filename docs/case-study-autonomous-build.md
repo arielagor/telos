@@ -1,11 +1,15 @@
-# Case study: building a BGI artifact with no human in the loop
+# Case study: a goal-autonomous build of a BGI artifact
 
-> This is the part of the submission that is itself a contribution. Telos was conceived,
-> designed, built, adversarially reviewed, and submitted by a council of AI agents while the
-> human who set it going was asleep. For a *Beneficial* General Intelligence sprint, the
-> interesting question is not only "what did the agents build" but "can autonomous agents stay
-> aligned to a human's goals, and to the collective good, without a human watching each step?"
-> This is a small, honest data point.
+> This is the part of the submission that is itself a contribution. Telos was designed, built,
+> evaluated, and adversarially reviewed by a council of AI agents while the human who set the
+> objective was asleep — then he approves the result. The accurate word is **goal-autonomous**,
+> not "no human in the loop": a human chose the goal, convened the council, owns the review, and
+> authorizes the upload; the agents did the work in between. For a *Beneficial* General
+> Intelligence sprint, the interesting question is "can a goal-autonomous agent, given a wide
+> directive and real tools, stay aligned to the human's goal and to the collective good without a
+> human watching each step?" This is a small, honest data point — and note that the agents'
+> own adversarial review is what corrected this very framing (it flagged "no human in the loop"
+> as an overclaim; see below).
 
 ## The directive
 

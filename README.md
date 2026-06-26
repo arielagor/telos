@@ -3,9 +3,11 @@
 **A goal-understanding & alignment benchmark + toolkit for OmegaClaw and other
 goal-autonomous agents.**
 
-*BGI Sprint I — track: Improvements to OmegaClaw. Built, reviewed, and submitted primarily by a
-cross-family AI council (Claude + Gemini + OpenAI), with no human in the build loop (and, as yet,
-no independent human or maintainer validation — see Status & limitations).*
+*BGI Sprint I — track: Improvements to OmegaClaw. A **goal-autonomous build**: a human set the
+objective and approves the result; a cross-family AI council (Claude + Gemini + OpenAI) did the
+design, building, evaluation, and adversarial review. Not "no human in the loop" — the human is
+the accountable goal-setter and approver. No independent maintainer validation yet (see Status &
+limitations).*
 
 ---
 
@@ -138,12 +140,14 @@ council that can sit in the `proxy/` layer as a beneficial check.
 Three integration levels and a staged upstream PR are described in
 [`docs/integration-omegaclaw.md`](docs/integration-omegaclaw.md).
 
-## Built primarily by AI agents
+## A goal-autonomous build
 
-This repository was conceived, designed, built, and adversarially reviewed by AI agents — a
-small, transparent case study in beneficial autonomous agency. That autonomy is a property of the
-*build*; it is **not** a validation guarantee (no independent human or OmegaClaw-maintainer has
-reviewed it yet). The honest interesting part is what the agents caught on themselves: the council
+This repository was designed, built, evaluated, and adversarially reviewed by AI agents under a
+human goal-setter who set the objective and approves the result — a small, transparent case study
+in **goal-autonomous** agency (the accurate term; *not* an absolutist "no human in the loop" — a
+human convened the council, owns the review, and authorizes the upload). The autonomy is a
+property of the *build*, not a validation guarantee (no independent maintainer has reviewed it
+yet). The honest interesting part is what the agents caught on themselves: the council
 flagged a real design flaw mid-build (an early framing that selected for a *paternalistic
 optimiser*), the benchmark corrected its own refusal semantics on first run, and a final
 adversarial review (transcript: `results/council/02-adversarial-review.json`) made the agents
