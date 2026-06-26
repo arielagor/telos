@@ -49,12 +49,20 @@ Confirmed on the DEEP Projects dashboard: team **AGOR AI**, **BGI Sprint I**, st
 - Track selected: **Improvements to OmegaClaw**.
 - Deliverable links submitted (all verified HTTP 200 before submit):
   1. GitHub repo — Telos — https://github.com/arielagor/telos (with an orienting comment)
-  2. Case study: built with no human in the loop — `docs/case-study-autonomous-build.md`
+  2. Case study: a goal-autonomous build — `docs/case-study-autonomous-build.md`
   3. Architecture & concepts (explainer) — `docs/architecture.md`
   4. How it fits OmegaClaw (integration) — `docs/integration-omegaclaw.md`
-- Pitch video: **left blank** (optional). If you want one, record a 2–3 min walkthrough,
-  upload to YouTube/Vimeo, and paste the URL via "Update Deliverables". A `/heygen` avatar
-  walkthrough could be generated, but a personal one from you is likely stronger.
+  5. Walkthrough video (8.5 min) — https://github.com/arielagor/telos/releases/tag/telos-video-v1
+- **Walkthrough video: DONE and attached.** An 8.5-min goal-autonomous walkthrough (HeyGen
+  Avatar V synthetic twin + AI voice, no human voiceover; AGOR cutaways; council-approved
+  unanimous GO). Hosted as a GitHub Release (`telos-video-v1`) and added as the 5th deliverable
+  link. Pipeline + script in `video-assets/`; final MP4 at `video-assets/FINAL-telos-walkthrough.mp4`.
+  - **Optional (1 min, tooling-blocked for me):** the dedicated YouTube/Vimeo *pitch-video slot*
+    is still empty because the browser file-upload tool caps at 10 MB (video is 57 MB) and there's
+    no YouTube API token. If you want it in that slot, drag `FINAL-telos-walkthrough.mp4` onto
+    studio.youtube.com (logged in as your channel), set Unlisted (title/desc in
+    `video-assets/youtube-meta.md`), and paste the URL via "Update Deliverables". The video is
+    already viewable via the Release link regardless.
 
 ### To change/withdraw
 - "Update Deliverables" on the dashboard edits links/track; "Delete Team" withdraws entirely.
