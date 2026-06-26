@@ -27,3 +27,9 @@ Thumbs.db
 # Local scratch (council raw transcripts kept under results/council/ are intentional)
 scratch/
 *.tmp
+
+# Video build — large binaries (final MP4 hosted as a GitHub Release asset)
+video-assets/heygen/*.mp4
+video-assets/_build/
+video-assets/*.mp4
+video-assets/_qa_*.png
