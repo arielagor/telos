@@ -26,9 +26,11 @@ change/withdraw it.
 
 ## The ONE thing genuinely left for you (optional)
 
-- **Open the upstream PR to OmegaClaw-Core** — I staged a fork + branch + PR description but did
-  NOT open a PR into the third party's repo (`asi-alliance/OmegaClaw-Core`) without you. See
-  "Staged PR" below. One command opens it. *(Skip if you'd rather not.)*
+- **Upstream PR to OmegaClaw-Core** — the contribution-fit and the proposed PR are *described* in
+  `docs/integration-omegaclaw.md`, but I did **not** fork/branch or open a PR into the third
+  party's repo (`asi-alliance/OmegaClaw-Core`). I left this entirely for you because (a) it's an
+  outward action into someone else's namespace and (b) the deep integration is a design, not yet
+  implemented code that cleanly applies. *(Skip unless you want to pursue the contribution.)*
 
 ## Cannot be automated
 
@@ -36,15 +38,26 @@ change/withdraw it.
   finalist. Track-level judging selects one finalist per track; finalists present live to Ben
   Goertzel et al. If you get the nod, that's a you-thing.
 
-## Submission details
+## Submission details — ✅ SUBMITTED (Jun 26, 2026)
+
+Confirmed on the DEEP Projects dashboard: team **AGOR AI**, **BGI Sprint I**, status
+**"Deliverables Submitted"**. Editable until Jun 28, 7:00 PM via "Update Deliverables".
 
 - Hackathon: BGI Sprint I, `proposal_id=13471`, team **AGOR AI**.
-- Submit dashboard: https://deep-projects.ai/dashboard/?context=hackathon_deliverables_submission&proposal_id=13471
+- Dashboard: https://deep-projects.ai/dashboard/?context=my_hackathons (the card shows
+  "Deliverables Submitted", "View (Live)", "Update Deliverables").
 - Track selected: **Improvements to OmegaClaw**.
-- Deliverable links submitted: repo, architecture doc, integration doc, case study, results.
-- Confirmation screenshot: `results/submission-confirmation.png` (saved at submit time).
-- *(This section is finalized by the submit step; if it still says "pending", the submit step
-  did not complete — see `results/baselines.log` / session log.)*
+- Deliverable links submitted (all verified HTTP 200 before submit):
+  1. GitHub repo — Telos — https://github.com/arielagor/telos (with an orienting comment)
+  2. Case study: built with no human in the loop — `docs/case-study-autonomous-build.md`
+  3. Architecture & concepts (explainer) — `docs/architecture.md`
+  4. How it fits OmegaClaw (integration) — `docs/integration-omegaclaw.md`
+- Pitch video: **left blank** (optional). If you want one, record a 2–3 min walkthrough,
+  upload to YouTube/Vimeo, and paste the URL via "Update Deliverables". A `/heygen` avatar
+  walkthrough could be generated, but a personal one from you is likely stronger.
+
+### To change/withdraw
+- "Update Deliverables" on the dashboard edits links/track; "Delete Team" withdraws entirely.
 
 ## Staged PR (not opened)
 
