@@ -1,10 +1,11 @@
 ; ============================================================================
 ; Telos goal graph — AtomSpace representation for OmegaClaw
 ; ----------------------------------------------------------------------------
-; This mirrors telos/schema.py in MeTTa so a goal reading materialises as atoms
-; in OmegaClaw's AtomSpace, where its NAL/PLN engines can reason over it. It is
-; runnable on a Hyperon MeTTa interpreter (pip install hyperon; `metta goal_graph.metta`)
-; and is exercised by tests/test_metta.py when hyperon is installed.
+; This mirrors telos/schema.py in MeTTa so a goal reading can materialise as atoms in an
+; AtomSpace. It runs on a standalone Hyperon MeTTa interpreter (pip install hyperon) and is
+; exercised by tests/test_metta.py. NOTE: the queries below are symbolic PATTERN-MATCHING, not
+; NAL or PLN inference (those are two distinct engines OmegaClaw ships; wiring this graph to them
+; is future integration work, not done here). This file is not yet loaded into a live OmegaClaw.
 ;
 ; Representation
 ;   (goal <id> <scope> <owner> <status>)     scope: individual | collective

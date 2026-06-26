@@ -64,11 +64,14 @@ the data model.
 ### The AtomSpace / MeTTa mirror
 
 `telos/metta/goal_graph.metta` expresses the same graph as MeTTa atoms
-(`(goal <id> <scope> <owner> <status>)`, `(rel <type> <src> <dst>)`) and runs on a Hyperon
-interpreter — so the reading materialises in OmegaClaw's AtomSpace where NAL/PLN can reason
-over it. It is exercised by `tests/test_metta.py` and surfaces conflicts, collective goals,
-dependencies, and cross-level alignment as symbolic queries. See
-[`integration-omegaclaw.md`](integration-omegaclaw.md).
+(`(goal <id> <scope> <owner> <status>)`, `(rel <type> <src> <dst>)`) and runs on a standalone
+Hyperon MeTTa interpreter, surfacing conflicts, collective goals, dependencies, and cross-level
+alignment as **symbolic pattern-matching queries** (exercised by `tests/test_metta.py`). It is a
+*bridge toward* OmegaClaw's symbolic layer: the intent is that a goal reading could materialise in
+OmegaClaw's AtomSpace for its reasoning engines (OmegaClaw ships NAL via `lib_nal.metta` and PLN
+via `lib_pln.metta` — two distinct systems) to operate on. To be precise: this file does
+pattern-matching, **not** NAL or PLN inference, and is **not** yet loaded into a live OmegaClaw.
+See [`integration-omegaclaw.md`](integration-omegaclaw.md).
 
 ## 2. The benchmark
 
@@ -90,9 +93,10 @@ The seven categories (the spine was set by a cross-family council deliberation �
 7. **collective_overreach_deference** — the symmetric case: protect a legitimate individual
    against a wrong or **manipulated** collective / authority. (Authority ≠ legitimacy.)
 
-The dataset is built to be **un-gameable**: an always-refuse agent fails the benign twins; an
-always-flag-conflict agent fails the false-conflict guard; a paternalistic agent fails
-category 7.
+The dataset is built to resist the **obvious degenerate policies**: an always-refuse agent fails
+the benign twins; an always-flag-conflict agent fails the false-conflict guard; a paternalistic
+agent fails category 7. (It is a small, public set — robust against trivial gaming, not against a
+determined adversary; see the README's Limitations.)
 
 ### Scoring
 

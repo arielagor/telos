@@ -1,12 +1,13 @@
 # Spec-diff gate — BGI Sprint requirements vs. Telos deliverables
 
-The PROVN methodology requires grepping every stated requirement against the deliverables
-before submission. **Any miss is a blocker.** Requirements are quoted from the BGI Sprint I
-hackathon page.
+This is an **internal submission checklist** (from the author's PROVN playbook — not a BGI
+requirement): grep every stated hackathon requirement against the deliverables before submitting.
+**Any miss is a blocker.** Requirements are paraphrased from the BGI Sprint I hackathon page
+(the one genuinely verbatim quote, the track success criterion, is marked as such below).
 
 ## Hard rules
 
-| # | Requirement (verbatim / paraphrased from the page) | Satisfied by | Status |
+| # | Requirement (paraphrased from the hackathon page) | Satisfied by | Status |
 |---|---|---|---|
 | 1 | "Every team must produce a **concrete artifact**. Discussion alone is not a valid final submission." | A runnable Python package + benchmark + council + MeTTa module + docs, public at `github.com/arielagor/telos`. | ✅ |
 | 2 | Contribution must fit a **track**. | Track: **Improvements to OmegaClaw** — the artifact is a goal-tracking mechanism + benchmark + evaluation/validation framework (three of the track's named example areas). | ✅ |
@@ -44,7 +45,8 @@ hackathon page.
 | Goal graph works | `tests/test_schema.py` | ✅ green |
 | Benchmark runs & scores | `results/generic-*.json`, `results/LEADERBOARD.md` | ✅ real run |
 | Council deliberates across 3 families | `results/council/*.json` | ✅ transcripts |
-| MeTTa representation runs in OmegaClaw's symbolic layer | `tests/test_metta.py` on Hyperon | ✅ executes |
+| MeTTa encoding runs (pattern-matching) on a standalone Hyperon interpreter | `tests/test_metta.py` | ✅ executes (not NAL/PLN inference; not loaded into a live OmegaClaw) |
 | Live end-to-end OmegaClaw integration | needs a configured Hyperon/OmegaClaw instance | ⚠️ described, adapter reports "not connected" rather than faking a score |
+| "OmegaClaw has no goal module" | grep of OmegaClaw-Core (242 files): no goal-named module; `lib_omegaclaw.metta`/`run.metta` have no `goal` token | ✅ grounded in the public repo |
 
 No requirement is currently a miss. The only open item is the submission action itself.

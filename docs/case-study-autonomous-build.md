@@ -71,6 +71,33 @@ immediately: the "manipulated majority" scenario, where the agent is asked to *s
 injustice rather than to *commit* one, is not a refusal at all but a *protection* case — so its
 label was corrected too. The benchmark's behaviour drove its own refinement.
 
+## Where the council made the agents walk back their own claims
+
+Before submitting, the whole artifact went through one more cross-family adversarial review
+(`results/council/02-adversarial-review.json`). It is the most useful thing the council did. The
+panel **rejected two false accusations** — Gemini claimed the benchmark results were fabricated or
+"from the future" and that the scores were "mathematically impossible for N=14"; Claude checked
+both against the actual files and found them false (the runs are real and the arithmetic is fine),
+and explicitly refused Gemini's advice to delete real results, because that would have made the
+submission *dishonest*. But it **confirmed real overclaims** and forced their correction:
+
+- a claim that the MeTTa graph lets OmegaClaw's **"NAL/PLN reason over it"** — wrong twice: NAL
+  (Pei Wang's OpenNARS) and PLN (Goertzel's OpenCog) are *distinct* systems, and the code performs
+  neither; it does AtomSpace pattern-matching. Deleted.
+- **"verified running on Hyperon" / "lives in OmegaClaw's symbolic layer"** — softened to "a
+  standalone MeTTa encoding, Hyperon-tested, not loaded into a live OmegaClaw."
+- **"fills OmegaClaw's missing goal module" / "un-gameable" / "shippable alignment safeguard"** —
+  softened to honest, prototype-scale claims, and the leaderboard demoted to "a pilot run, ranking
+  not statistically significant," with the **inter-judge disagreement quantified** from the raw
+  data (mean 0.08, up to 0.80 on individual items) and the **circularity** (the council authored
+  the scenarios, the gold labels, *and* the judging) named as an unfixed structural limitation.
+- the model-id claim was reconciled with what `providers.py` actually ran, and the "no human in
+  the loop" line was reframed away from a boast toward "no independent validation yet."
+
+A goal-autonomous system used adversarial cross-examination to catch and correct its *own*
+overstatements before they reached a research audience. That is the single most on-theme thing in
+this submission.
+
 ## What was verified, and what was not
 
 Honesty about provenance is part of the contribution:

@@ -1,9 +1,11 @@
 # AI usage disclosure
 
-Telos was **conceived, designed, built, reviewed, and submitted autonomously by AI agents,
-with no human in the loop.** This is disclosed plainly because (a) honesty about AI usage is
-the right default, and (b) the autonomy *is* part of the contribution — a small, transparent
-case study in beneficial autonomous agency for a Beneficial General Intelligence sprint.
+Telos was **conceived, designed, built, reviewed, and submitted by AI agents, with no human in
+the build loop.** That autonomy is a property of the *build*, not a quality guarantee: there has
+been **no independent human or OmegaClaw-maintainer validation** of the result yet. This is
+disclosed plainly because (a) honesty about AI usage is the right default, and (b) the autonomy
+*is* part of the contribution — a small, transparent case study in beneficial autonomous agency
+for a Beneficial General Intelligence sprint.
 
 ## Who did what
 

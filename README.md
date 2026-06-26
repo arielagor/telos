@@ -3,8 +3,9 @@
 **A goal-understanding & alignment benchmark + toolkit for OmegaClaw and other
 goal-autonomous agents.**
 
-*BGI Sprint I — track: Improvements to OmegaClaw. Built, reviewed, and submitted autonomously
-by a cross-family AI council (Claude + Gemini + OpenAI), with no human in the loop.*
+*BGI Sprint I — track: Improvements to OmegaClaw. Built, reviewed, and submitted primarily by a
+cross-family AI council (Claude + Gemini + OpenAI), with no human in the build loop (and, as yet,
+no independent human or maintainer validation — see Status & limitations).*
 
 ---
 
@@ -12,9 +13,10 @@ by a cross-family AI council (Claude + Gemini + OpenAI), with no human in the lo
 
 The sprint theme is **AI agents that understand our individual and collective goals.**
 [OmegaClaw](https://github.com/asi-alliance/OmegaClaw-Core) is a strong substrate for this — it
-is *goal-autonomous*: it creates goals, pursues them, and tracks progress on its own. But it
-ships **no explicit goal-representation or goal-tracking module**, and "understanding goals" is
-exactly where an autonomous agent is most dangerous when it is subtly wrong:
+is *goal-autonomous*: it creates goals, pursues them, and tracks progress on its own. But a grep
+of the public OmegaClaw-Core repo (242 files) finds **no dedicated goal-representation module** —
+`lib_omegaclaw.metta` and `run.metta` contain no `goal` token at all — and "understanding goals"
+is exactly where an autonomous agent is most dangerous when it is subtly wrong:
 
 - pursuing the **literal** request while missing the **real** goal,
 - optimising a **proxy** and harming what it stood for (Goodhart),
@@ -29,12 +31,12 @@ representable, and defensible.**
 
 | Piece | What it is |
 |---|---|
-| `telos/schema.py` | a small, dependency-free **goal graph**: individual vs collective goals, four relation types (`supports/conflicts/subsumes/depends_on`), progress, blocking, and an individual↔collective **alignment** score. Fills OmegaClaw's missing goal module. |
+| `telos/schema.py` | a small, dependency-free **goal graph**: individual vs collective goals, four relation types (`supports/conflicts/subsumes/depends_on`), progress, blocking, and an individual↔collective **alignment** score. Prototypes a stakeholder-aware goal module we did not find in the public OmegaClaw-Core repo. |
 | `telos/scenarios/` | a **14-scenario, 7-category benchmark** with gold labels (see below). |
 | `telos/harness.py`, `judge.py`, `bench.py` | run an agent over the scenarios and **score** it. |
-| `telos/council.py` | the **Beneficial Council** — cross-family deliberation + adversarial red-team. The benchmark's judge, a shippable alignment safeguard, and the engine that built this repo. |
+| `telos/council.py` | the **Beneficial Council** — cross-family deliberation + adversarial red-team. The benchmark's judge, a prototype deliberative alignment check, and the engine that built this repo. |
 | `telos/adapters/` | `generic_llm` (benchmark any model) + `omegaclaw` (benchmark OmegaClaw itself). |
-| `telos/metta/goal_graph.metta` | the **AtomSpace/MeTTa mirror** — runs on Hyperon, so the goal graph lives in OmegaClaw's symbolic layer for NAL/PLN to reason over. |
+| `telos/metta/goal_graph.metta` | a standalone **MeTTa encoding** of the goal graph as AtomSpace atoms (tested on a Hyperon interpreter via `pip install hyperon`). A bridge toward OmegaClaw's symbolic layer — **not yet loaded into a live OmegaClaw runtime**. |
 | `docs/` | architecture explainer, OmegaClaw integration guide, and the autonomous-build case study. |
 
 ## The benchmark
@@ -51,32 +53,55 @@ action, and whether it refuses). The seven categories:
 6. **goal_ambiguity** — ask vs assume; plus a *false-conflict* twin it must *not* flag
 7. **collective_overreach_deference** — protect a legitimate individual against a wrong or **manipulated** collective/authority (authority ≠ legitimacy)
 
-The dataset is built to be **un-gameable**: always-refuse fails the benign twins, always-flag
-fails the false-conflict guard, and a paternalistic agent fails category 7. Scoring uses a
-deterministic refusal gate on genuine-harm cases plus a **cross-family council** for the nuanced
-dimensions — with the agent's **own family excluded from its jury** to remove self-preference.
+The dataset resists the **obvious degenerate policies**: always-refuse fails the benign twins,
+always-flag fails the false-conflict guard, and a paternalistic agent fails category 7. (It is a
+small public set, not adversarially robust — see Limitations.) Scoring uses a deterministic
+refusal gate on genuine-harm cases plus a **cross-family council** for the nuanced dimensions,
+with the agent's **own family excluded from its jury** to reduce self-preference bias (it does
+not remove the deeper circularity — see Limitations).
 
-## Results (baseline frontier models)
+## Status & limitations (read this before the numbers)
 
-Each model is scored as the agent-under-test and judged by the *other* families. Numbers are
-from an actual run (`results/`), reproducible with `bash scripts/run_baselines.sh`.
+Telos is a **seed harness and pilot reference set, not a validated benchmark.** Be honest about
+what it is and isn't:
 
-| agent | overall | goal_inf | scope | conflict | collective | refusal | refusal_acc | n |
+- **N = 14, public, hand-authored.** Small, and visible to anyone — so it measures broad
+  competence, not adversarial robustness.
+- **Reference labels are council-authored.** The same family of models helped write the scenarios,
+  the gold labels, *and* judge — a real **circularity**. Excluding an agent's own family from its
+  jury reduces self-preference but does not remove this.
+- **Two-judge panels, not calibrated.** With the agent's own family excluded, each score rests on
+  two judges. Inter-judge spread (from `results/*.json`): mean **0.08**, median **0.05**, but
+  **up to 0.80** on individual (item, dimension) pairs — so small gaps in the table are inside the
+  judge noise. **The leaderboard ordering below is not statistically meaningful.**
+- **The MeTTa encoding is standalone**, tested on a Hyperon interpreter; it is **not loaded into a
+  live OmegaClaw runtime**, and it performs AtomSpace pattern-matching, **not** NAL or PLN
+  inference.
+- **No independent human or OmegaClaw-maintainer validation yet.** It was built primarily by AI
+  agents (see the case study); that is the experiment, not a quality guarantee.
+
+## Pilot LLM-judge run (N = 14)
+
+Each model is the agent-under-test, judged by the *other* families. Real run on 2026-06-26
+(`results/`), reproducible with `bash scripts/run_baselines.sh`. Configured models (the
+`providers.py` defaults this run used): claude = `claude-opus-4-8`, openai = `gpt-5.5`,
+gemini = `gemini-3.1-pro-preview` (the result JSON records the family label).
+
+| agent (family) | overall | goal_inf | scope | conflict | collective | refusal | refusal_acc | n |
 |---|---|---|---|---|---|---|---|---|
-| `claude-opus-4-8` | **0.937** | 0.959 | 0.891 | 0.845 | 0.989 | 0.998 | 1.00 | 14 |
-| `gpt-5.5` | **0.911** | 0.940 | 0.843 | 0.796 | 0.968 | 1.000 | 1.00 | 14 |
-| `gemini-3.1-pro-preview` | **0.902** | 0.911 | 0.882 | 0.816 | 0.905 | 0.998 | 1.00 | 14 |
+| claude | 0.94 | 0.96 | 0.89 | 0.85 | 0.99 | 1.00 | 1.00 | 14 |
+| openai | 0.91 | 0.94 | 0.84 | 0.80 | 0.97 | 1.00 | 1.00 | 14 |
+| gemini | 0.90 | 0.91 | 0.88 | 0.82 | 0.90 | 1.00 | 1.00 | 14 |
 
-Dimensions: `goal_inf` (goal inference) · `scope` (individual/collective) · `conflict`
-(conflict detection) · `collective` (collective-beneficial action) · `refusal` (beneficial
-refusal) · `refusal_acc` (decisive-case refusal accuracy). Run: 2026-06-26, judged by the
-cross-family council with each agent's own family excluded from its jury.
+Dimensions: `goal_inf` · `scope` (individual/collective) · `conflict` (conflict detection) ·
+`collective` (collective-beneficial action) · `refusal` · `refusal_acc` (decisive-case refusal).
 
-**What the numbers say.** Frontier models are strong at recommending collectively-beneficial
-actions and at the decisive refusal calls (1.00), but **conflict detection is the hardest
-dimension for every model** (0.80–0.85) — they more often miss a real goal collision or invent
-a spurious one. That is exactly the kind of goal-understanding weakness a goal-autonomous agent
-like OmegaClaw needs measured before it acts on its own.
+**What the run suggests** (directional, given the caveats above): the decisive refusal calls are
+handled well across the board (1.00), while **conflict detection is the weakest dimension for
+every model** (~0.80–0.85) and **goal-progress tracking is the weakest category** (~0.70–0.75) —
+agents miss real goal collisions, invent spurious ones, and lose track of blocked/abandoned
+goals. Those are the goal-understanding weaknesses worth measuring before an autonomous agent
+acts on its own.
 
 ## Quick start
 
@@ -106,18 +131,23 @@ the deeper AtomSpace integration.
 
 ## How it fits OmegaClaw
 
-OmegaClaw is goal-autonomous but has no goal module. Telos supplies one in OmegaClaw's own
-idiom: a MeTTa goal graph for the AtomSpace (verified running on Hyperon), a benchmark that can
-gate `Autotests/`, and a council that can sit in the `proxy/` layer as a beneficial check.
+OmegaClaw is goal-autonomous but we found no goal module in its public repo. Telos prototypes one
+in OmegaClaw's own idiom: a MeTTa goal graph encoded as AtomSpace atoms (tested on a Hyperon
+interpreter, not yet loaded into a live OmegaClaw), a benchmark that can gate `Autotests/`, and a
+council that can sit in the `proxy/` layer as a beneficial check.
 Three integration levels and a staged upstream PR are described in
 [`docs/integration-omegaclaw.md`](docs/integration-omegaclaw.md).
 
-## Built with no human in the loop
+## Built primarily by AI agents
 
-This repository was conceived, designed, built, adversarially reviewed, and submitted by AI
-agents — a small, transparent case study in beneficial autonomous agency. The council caught a
-real design flaw mid-build (an early framing that selected for a *paternalistic optimiser*) and
-the benchmark corrected its own refusal semantics on first run. Full account:
+This repository was conceived, designed, built, and adversarially reviewed by AI agents — a
+small, transparent case study in beneficial autonomous agency. That autonomy is a property of the
+*build*; it is **not** a validation guarantee (no independent human or OmegaClaw-maintainer has
+reviewed it yet). The honest interesting part is what the agents caught on themselves: the council
+flagged a real design flaw mid-build (an early framing that selected for a *paternalistic
+optimiser*), the benchmark corrected its own refusal semantics on first run, and a final
+adversarial review (transcript: `results/council/02-adversarial-review.json`) made the agents
+*walk back their own overclaims* before submitting. Full account:
 [`docs/case-study-autonomous-build.md`](docs/case-study-autonomous-build.md) and
 [`AI_USAGE.md`](AI_USAGE.md). Council transcripts live in `results/council/`.
 

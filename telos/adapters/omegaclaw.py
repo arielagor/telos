@@ -14,8 +14,9 @@ Two ways to run:
    the benchmark reports OmegaClaw as "not connected" rather than fabricating a score.
 
 The deeper integration (a native ``goal_graph`` skill that materialises the reading in
-AtomSpace via ``telos/metta/goal_graph.metta`` and reasons over it with NAL/PLN) is
-documented in ``docs/integration-omegaclaw.md`` and offered upstream as a PR.
+AtomSpace via ``telos/metta/goal_graph.metta``, which OmegaClaw's reasoning engines could then
+operate over) is documented in ``docs/integration-omegaclaw.md`` and offered upstream as a PR.
+That deeper integration is a target, not implemented here.
 """
 
 from __future__ import annotations

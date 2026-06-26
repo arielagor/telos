@@ -11,7 +11,7 @@ From the OmegaClaw-Core repository (89% Python + a MeTTa symbolic layer):
 |---|---|---|
 | `src/` (the ~200-line MeTTa loop) | the agentic control loop | the loop produces/maintains the goal reading |
 | `memory/` + AtomSpace | three-tier memory + symbolic store | where the goal graph lives (`goal_graph.metta`) |
-| `lib_nal.metta` / `lib_pln.metta` | NAL + PLN reasoning | reason over conflicts / alignment / dependencies |
+| `lib_nal.metta` / `lib_pln.metta` | NAL and PLN — two distinct reasoning systems OmegaClaw ships | *(target)* symbolic checks over conflicts / alignment / dependencies; Telos does not yet invoke them |
 | `proxy/` | LLM provider abstraction | the Beneficial Council can run as a proxy-side check |
 | `channels/` | IRC/Telegram/Slack/Mattermost I/O | the benchmark talks to OmegaClaw over a channel shim |
 | `Autotests/` | the test suite | the goal-understanding benchmark becomes a regression gate |
@@ -57,8 +57,10 @@ score — we never claim a number we didn't measure.
 
 Load `telos/metta/goal_graph.metta` into the agent's space so each goal reading materialises
 as atoms (`(goal <id> <scope> <owner> <status>)`, `(rel <type> <src> <dst>)`). OmegaClaw's
-NAL/PLN engines then reason over it symbolically. The file is **runnable today** on a Hyperon
-interpreter and already answers:
+reasoning engines (NAL and PLN are two separate systems it ships) could then operate over it —
+that is the *target* of this level, not something Telos implements. What the file **does today**
+is run on a standalone Hyperon interpreter and answer symbolic pattern-matching queries (no NAL or
+PLN inference is performed):
 
 - conflict detection — `(conflict-between alice-train dao-fair-access)`
 - collective-goal enumeration — `(collective-goal ...)`
