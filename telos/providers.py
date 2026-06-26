@@ -101,6 +101,8 @@ def call_claude(
             input=prompt,
             capture_output=True,
             text=True,
+            encoding="utf-8",        # Windows defaults stdin to cp1252, which chokes on
+            errors="replace",        # non-Latin-1 chars (e.g. arrows/em-dashes) in prompts
             timeout=timeout,
         )
     except subprocess.TimeoutExpired:
