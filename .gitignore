@@ -33,3 +33,9 @@ video-assets/heygen/*.mp4
 video-assets/_build/
 video-assets/*.mp4
 video-assets/_qa_*.png
+
+# OmegaClaw live-run artifacts
+ig01_payload.json
+results/*.err
+results/baselines.log
+/PeTTa/

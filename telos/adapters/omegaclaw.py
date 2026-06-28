@@ -30,6 +30,17 @@ from telos.adapters.base import AdapterError, build_prompt
 from telos.adapters.generic_llm import _normalize
 from telos.council import extract_json
 
+# OmegaClaw is an agentic loop that communicates ONLY via its `send` command — a bare
+# reply is treated as an unrecognised command and never reaches the channel. So we tell
+# it to deliver the goal reading by issuing exactly one `send <json>` command.
+OMEGACLAW_SEND_SUFFIX = (
+    "\n\n--- HOW TO REPLY (OmegaClaw) ---\n"
+    "Deliver your answer by issuing exactly ONE command and nothing else: the word "
+    "`send` followed by your JSON goal reading collapsed onto a single line. Do not "
+    "use query, pin, remember, or any other command. Example:\n"
+    'send {"goals":[...],"conflicts":[...],"recommended_action":"...","refused":false,"reasoning":"..."}'
+)
+
 
 class OmegaClawAdapter:
     name = "omegaclaw"
@@ -46,7 +57,7 @@ class OmegaClawAdapter:
                 "(see docs/integration-omegaclaw.md). Reporting 'not connected' rather than "
                 "fabricating a score."
             )
-        prompt = build_prompt(scenario)
+        prompt = build_prompt(scenario) + OMEGACLAW_SEND_SUFFIX
         payload = json.dumps({"message": prompt}).encode("utf-8")
         req = urllib.request.Request(
             self.endpoint, data=payload, headers={"Content-Type": "application/json"}
