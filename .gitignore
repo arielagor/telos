@@ -39,3 +39,4 @@ ig01_payload.json
 results/*.err
 results/baselines.log
 /PeTTa/
+article_payload.json
