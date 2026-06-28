@@ -29,6 +29,8 @@ goal-autonomous agent on real, unstructured input.
 ## Honest scope
 
 The Telos MeTTa module (`telos/metta/omegaclaw_goal_module.metta`) is authored for OmegaClaw's
-AtomSpace and verified standalone on Hyperon, but **not yet loaded into this live agent** — the
-derivation here is the agent's LLM reasoning under the Telos *framing*. Loading the symbolic module
-into the live runtime is the next step.
+AtomSpace, verified standalone on Hyperon, and **does load + derive in a live OmegaClaw runtime**
+(the goal/rel atoms + conflict rule were driven into the running agent's `metta` skill; see
+[`omegaclaw-metta-load.md`](omegaclaw-metta-load.md)). But the derivation **in this demo** is the
+agent's **LLM reasoning under the Telos *framing***, not the loaded symbolic module. The next step
+is auto-extracting goal atoms from free text so the loaded rules fire on real input.

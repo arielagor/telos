@@ -107,12 +107,15 @@ this submission.
 Honesty about provenance is part of the contribution:
 
 - **Verified:** the goal graph, harness, judge, and council run; the full test suite is green;
-  the MeTTa representation actually executes on Hyperon (`tests/test_metta.py`); every score in
-  `results/` came from a real model run; the public repo and the submission were created by the
-  agents.
-- **Described, not executed in CI:** a live end-to-end OmegaClaw run (it needs a configured
-  Hyperon/OmegaClaw instance). The OmegaClaw adapter reports "not connected" rather than
-  fabricating a score, and the integration is offered as a staged PR.
+  the MeTTa representation actually executes on Hyperon (`tests/test_metta.py`) **and loads +
+  derives in a live OmegaClaw runtime** (`docs/omegaclaw-metta-load.md`); a live
+  `singularitynet/omegaclaw:latest` **benchmark run was done** (0.620 overall;
+  `results/LEADERBOARD.md`); every score in `results/` came from a real model run; the public repo
+  and the submission were created by the agents.
+- **Done after the build (outside CI):** the live end-to-end OmegaClaw run (live run **0.620**; it
+  needs a configured Hyperon/OmegaClaw instance, so it stays out of CI), and the integration is now
+  an **open PR, [#218](https://github.com/asi-alliance/OmegaClaw-Core/pull/218)**. The OmegaClaw
+  adapter still reports "not connected" by **default** rather than fabricating a score.
 
 ## What this is a data point for
 

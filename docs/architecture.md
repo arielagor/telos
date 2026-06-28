@@ -70,7 +70,9 @@ alignment as **symbolic pattern-matching queries** (exercised by `tests/test_met
 *bridge toward* OmegaClaw's symbolic layer: the intent is that a goal reading could materialise in
 OmegaClaw's AtomSpace for its reasoning engines (OmegaClaw ships NAL via `lib_nal.metta` and PLN
 via `lib_pln.metta` — two distinct systems) to operate on. To be precise: this file does
-pattern-matching, **not** NAL or PLN inference, and is **not** yet loaded into a live OmegaClaw.
+pattern-matching, **not** NAL or PLN inference. The goal/conflict rules now **also load + derive in
+a live OmegaClaw runtime** (see [`omegaclaw-metta-load.md`](omegaclaw-metta-load.md)), but the atoms
+are loaded **explicitly**, not auto-extracted.
 See [`integration-omegaclaw.md`](integration-omegaclaw.md).
 
 ## 2. The benchmark

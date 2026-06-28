@@ -462,8 +462,95 @@ def s15():
     save(img, "slide-b16.png")
 
 
+def s_metta_live():  # slide-b20 — the named module rules + a NAL deduction derive in OmegaClaw's engine
+    img, d, y = base("update | runs in OmegaClaw's MeTTa engine",
+                     "The goal module derives in OmegaClaw's PeTTa engine")
+    lh = [90, y + 30, 1170, H - 150]
+    rounded(d, lh, 18, fill=SURFACE)
+    d.text((130, y + 54), "named rules from lib_telos_goals.metta, run in singularitynet/omegaclaw:latest",
+           font=font(24, semi=True), fill=MUTED)
+    rows = [
+        ("telos-conflicts", "(conflict-between alice-train dao-fair-access)"),
+        ("telos-collective-goals", "(collective-goal dao-fair-access dao)"),
+        ("telos-blocked", "(blocked dao-fair-access on gpu-quota)"),
+        ("|-nal  (NAL deduction)", "((--> alice-train needs-reconciliation) (stv 1.0 0.81))"),
+    ]
+    yy = y + 116
+    for rule, res in rows:
+        d.text((130, yy), rule, font=font(27, bold=True), fill=CYAN)
+        d.text((150, yy + 40), "-> " + res, font=font(26), fill=GREEN)
+        yy += 100
+    d.text((130, H - 192), "PeTTa / SWI-Prolog MeTTa engine  |  full log: results/omegaclaw-metta-load.log",
+           font=font(23), fill=MUTED)
+    rh = [1210, y + 30, W - 90, H - 150]
+    rounded(d, rh, 18, fill=SURFACE)
+    d.text((1250, y + 58), "What this shows", font=font(31, bold=True), fill=PINK)
+    bullets(d, ["the named rules fire in OmegaClaw's runtime, not the reference Hyperon interpreter",
+                "telos-blocked (nested match + if) runs clean, so PR #218 is proven, not just parsed",
+                "a NAL deduction over goal terms computes a real truth value (conf 0.9*0.9 = 0.81)"],
+            1250, y + 116, 560, size=25, gap=18, dot=GREEN)
+    d.text((1250, y + 372), "Honest bound", font=font(31, bold=True), fill=MUTED)
+    bullets(d, ["atoms asserted explicitly (the example graph), not yet auto-extracted from free text",
+                "the conflict rules are pattern-matching; the NAL step is one hand-built inference"],
+            1250, y + 430, 560, size=25, gap=18, dot=MUTED)
+    save(img, "slide-b20.png")
+
+
+def s_pr():  # slide-b21 — open, additive upstream PR to OmegaClaw-Core
+    img, d, y = base("update | offered upstream",
+                     "An open upstream PR to OmegaClaw-Core")
+    box = [90, y + 36, W - 90, H - 160]
+    rounded(d, box, 18, fill=SURFACE)
+    d.text((140, y + 64), "asi-alliance / OmegaClaw-Core   #218", font=font(36, bold=True), fill=CYAN)
+    pill = [W - 320, y + 58, W - 140, y + 114]
+    rounded(d, pill, 28, fill=GREEN)
+    d.text((W - 288, y + 70), "OPEN", font=font(30, bold=True), fill=BG)
+    d.text((140, y + 140), "Add opt-in  lib_telos_goals.metta  (goal / conflict atoms)",
+           font=font(34, semi=True), fill=TEXT)
+    bullets(d, [
+        "Additive only: one new lib_*.metta module, zero edits to the core loop",
+        "Opt-in and side-effect-free: default behaviour unchanged unless imported",
+        "Ships the same named rules just proven to derive in the live engine",
+    ], 150, y + 212, W - 320, size=32, gap=20, dot=VIOLET)
+    fb = [130, H - 300, W - 130, H - 200]
+    rounded(d, fb, 14, fill=SURFACE2)
+    d.text((160, H - 286), "+  lib_telos_goals.metta        +  usage doc", font=font(30, bold=True), fill=GREEN)
+    d.text((160, H - 244), "lib_omegaclaw.metta | run.metta | src/        0 changes", font=font(28), fill=MUTED)
+    bx = [90, H - 150, W - 90, H - 70]
+    rounded(d, bx, 14, fill=SURFACE2)
+    d.text((130, H - 138), "github.com/asi-alliance/OmegaClaw-Core/pull/218", font=font(30, bold=True), fill=CYAN)
+    d.text((130, H - 102), "open | MIT, same as OmegaClaw | awaiting maintainer review",
+           font=font(26), fill=MUTED)
+    save(img, "slide-b21.png")
+
+
+def s_ladder():  # slide-b22 — where the goal module runs now; retires this deck's own caveats
+    img, d, y = base("update | where it stands now",
+                     "Three rungs lit since this deck was recorded")
+    cy = y + 170
+    node(d, 420,  cy, 360, 130, "Hyperon", "unit test (CI)", accent=CYAN)
+    node(d, 960,  cy, 360, 130, "live engine", "named rules + NAL", accent=GREEN)
+    node(d, 1500, cy, 360, 130, "OmegaClaw-Core", "PR #218 open", accent=VIOLET)
+    arrow(d, (600, cy), (780, cy),  color=MUTED, width=5)
+    arrow(d, (1140, cy), (1320, cy), color=MUTED, width=5)
+    d.text((250, cy + 110), "Hyperon CI was the only rung lit when this deck was recorded.",
+           font=font(29, semi=True), fill=GREEN)
+    rb = [90, cy + 175, W - 90, cy + 330]
+    rounded(d, rb, 16, fill=SURFACE)
+    d.text((130, cy + 196), "Retires two lines from this deck:", font=font(29, bold=True), fill=PINK)
+    d.text((130, cy + 246), "\"not yet in a live OmegaClaw\"   ->   derives in the live engine",
+           font=font(28), fill=TEXT)
+    d.text((130, cy + 288), "\"MeTTa not yet running inside OmegaClaw\"   ->   loads + fires there now",
+           font=font(28), fill=TEXT)
+    d.text((130, H - 150),
+           "Still open: Level 3, wire the benchmark into OmegaClaw's Autotests/ as a regression gate.",
+           font=font(27, semi=True), fill=MUTED)
+    save(img, "slide-b22.png")
+
+
 if __name__ == "__main__":
     s01(); s01b(); s02(); s03(); s04(); s05(); s06(); s07(); s08(); s09(); s10(); s11(); s12(); s13(); s14()
     s_live(); s_setup(); s_article()
+    s_metta_live(); s_pr(); s_ladder()   # NEW: live engine derivation + open PR #218 + status ladder
     s15()
     print("done -> cutaways/")

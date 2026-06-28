@@ -23,12 +23,50 @@ from __future__ import annotations
 
 import json
 import os
+import subprocess
 import urllib.error
 import urllib.request
 
 from telos.adapters.base import AdapterError, build_prompt
 from telos.adapters.generic_llm import _normalize
 from telos.council import extract_json
+
+
+def _recover_from_logs() -> dict | None:
+    """Recover the agent's most recent goal reading from `docker logs` when it produced a
+    reading but never wrapped it in `send` (so nothing reached the channel). Opt-in via
+    OMEGACLAW_LOG_FALLBACK=<container>. Returns the parsed reading, or None."""
+    container = os.environ.get("OMEGACLAW_LOG_FALLBACK", "")
+    if not container:
+        return None
+    try:
+        out = subprocess.run(
+            ["docker", "logs", "--since", "240s", container],
+            capture_output=True, text=True, errors="ignore", timeout=30,
+        ).stdout + subprocess.run(
+            ["docker", "logs", "--since", "240s", container],
+            capture_output=True, text=True, errors="ignore", timeout=30,
+        ).stderr
+    except Exception:
+        return None
+    # find the LAST balanced {"goals": ...} object in the agent's stdout
+    start = out.rfind('{"goals"')
+    if start < 0:
+        return None
+    depth, end = 0, -1
+    for i in range(start, len(out)):
+        c = out[i]
+        if c == "{":
+            depth += 1
+        elif c == "}":
+            depth -= 1
+            if depth == 0:
+                end = i + 1
+                break
+    if end < 0:
+        return None
+    obj = extract_json(out[start:end])
+    return obj if isinstance(obj, dict) else None
 
 # OmegaClaw is an agentic loop that communicates ONLY via its `send` command — a bare
 # reply is treated as an unrecognised command and never reaches the channel. So we tell
@@ -78,5 +116,13 @@ class OmegaClawAdapter:
 
         obj = extract_json(text)
         if not isinstance(obj, dict):
+            # The agentic loop sometimes emits a complete goal reading as a bare line WITHOUT
+            # its `send` command, so the reading never leaves the agent over the channel. It is
+            # still in the agent's stdout. If OMEGACLAW_LOG_FALLBACK names a container, recover
+            # the most recent reading from `docker logs` rather than scoring it a null. (Local
+            # Docker convenience; the adapter stays generic when the env var is unset.)
+            obj = _recover_from_logs()
+            if isinstance(obj, dict):
+                return _normalize(obj, raw="[recovered from agent stdout]", model="omegaclaw")
             raise AdapterError("OmegaClaw reply did not contain a JSON goal reading")
         return _normalize(obj, raw=text, model="omegaclaw")

@@ -127,7 +127,7 @@ the host bridge captures it.
 
 ---
 
-## Issue 4 — agent rejects its own commands: `SINGLE_COMMAND_FORMAT_ERROR`  🔧 IN PROGRESS
+## Issue 5 — agent rejects its own commands: `SINGLE_COMMAND_FORMAT_ERROR`  🔧 IN PROGRESS
 
 **Symptom.** With the OpenAI provider (`gpt-5.4`, Responses API) the agent's every
 internal command is rejected by its own harness:

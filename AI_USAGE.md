@@ -48,6 +48,7 @@ was tightened to fire only on genuine-harm scenarios. That change is recorded in
 ## What is real vs. described
 
 Every benchmark number in this repo was produced by an actual run (`results/`). The MeTTa
-file actually executes on Hyperon (`tests/test_metta.py`). Where a capability is described but
-not executed in CI (a live OmegaClaw end-to-end run), it is labelled as such — no score is
-fabricated. See `docs/integration-omegaclaw.md`.
+file actually executes on Hyperon (`tests/test_metta.py`) and loads + derives in a live OmegaClaw
+runtime (`docs/omegaclaw-metta-load.md`). A live `singularitynet/omegaclaw:latest` end-to-end run
+**was executed outside CI** (0.620 overall; `results/LEADERBOARD.md`); CI itself still does not run
+it, so no score is fabricated there. See `docs/integration-omegaclaw.md`.

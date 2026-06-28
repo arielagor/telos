@@ -45,8 +45,8 @@ requirement): grep every stated hackathon requirement against the deliverables b
 | Goal graph works | `tests/test_schema.py` | ✅ green |
 | Benchmark runs & scores | `results/generic-*.json`, `results/LEADERBOARD.md` | ✅ real run |
 | Council deliberates across 3 families | `results/council/*.json` | ✅ transcripts |
-| MeTTa encoding runs (pattern-matching) on a standalone Hyperon interpreter | `tests/test_metta.py` | ✅ executes (not NAL/PLN inference; not loaded into a live OmegaClaw) |
-| Live end-to-end OmegaClaw integration | needs a configured Hyperon/OmegaClaw instance | ⚠️ described, adapter reports "not connected" rather than faking a score |
+| MeTTa encoding runs (pattern-matching) on a standalone Hyperon interpreter, **and loads + derives in a live OmegaClaw runtime** | `tests/test_metta.py`, `docs/omegaclaw-metta-load.md` | ✅ executes (not NAL/PLN inference; live atoms loaded explicitly, not auto-extracted) |
+| Live end-to-end OmegaClaw integration | a live run done **outside CI** (`results/LEADERBOARD.md`, `docs/omegaclaw-windows-setup.md`) | ⚠️ real run: **0.620 overall / 0.869 on the 10/14 answered**; CI default still reports "not connected" rather than faking a score |
 | "OmegaClaw has no goal module" | grep of OmegaClaw-Core (242 files): no goal-named module; `lib_omegaclaw.metta`/`run.metta` have no `goal` token | ✅ grounded in the public repo |
 
 No requirement is currently a miss. The only open item is the submission action itself.

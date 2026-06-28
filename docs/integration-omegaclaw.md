@@ -1,7 +1,7 @@
 # Integrating Telos with OmegaClaw
 
 This document shows exactly how Telos fits into [OmegaClaw-Core](https://github.com/asi-alliance/OmegaClaw-Core)
-— what it plugs into, and what we offer upstream. Both projects are MIT-licensed.
+— what it plugs into, and what we contribute upstream (now the open PR #218, below). Both projects are MIT-licensed.
 
 > **Now an open upstream PR:** [asi-alliance/OmegaClaw-Core#218](https://github.com/asi-alliance/OmegaClaw-Core/pull/218)
 > contributes the goal module as an opt-in, side-effect-free `lib_telos_goals.metta` (matching the repo's
@@ -65,8 +65,11 @@ Load `telos/metta/goal_graph.metta` into the agent's space so each goal reading 
 as atoms (`(goal <id> <scope> <owner> <status>)`, `(rel <type> <src> <dst>)`). OmegaClaw's
 reasoning engines (NAL and PLN are two separate systems it ships) could then operate over it —
 that is the *target* of this level, not something Telos implements. What the file **does today**
-is run on a standalone Hyperon interpreter and answer symbolic pattern-matching queries (no NAL or
-PLN inference is performed):
+is run on a standalone Hyperon interpreter, and it now **also loads + derives in the live
+`singularitynet/omegaclaw:latest` runtime**: the goal/rel atoms + conflict rule were driven into the
+running agent's `metta` skill and the query derived `(conflict-between alice-train dao-fair-access)`
+in its live PeTTa engine (see [`omegaclaw-metta-load.md`](omegaclaw-metta-load.md)). Either way it
+answers symbolic pattern-matching queries (no NAL or PLN inference is performed):
 
 - conflict detection — `(conflict-between alice-train dao-fair-access)`
 - collective-goal enumeration — `(collective-goal ...)`
@@ -93,14 +96,15 @@ A self-contained, optional contribution that touches nothing in the core loop:
 3. A `goal-understanding` entry under `Autotests/` wired to the benchmark.
 4. This document + the architecture explainer (onboarding value).
 
-The PR is **staged** as a fork + branch with a written description; opening it against
-`asi-alliance/OmegaClaw-Core` is left as a one-tap human action (see the repo's HANDOFF), since
-it is a contribution into a third party's repository.
+The PR is **now open**: [asi-alliance/OmegaClaw-Core#218](https://github.com/asi-alliance/OmegaClaw-Core/pull/218)
+contributes the goal module as an opt-in `lib_telos_goals.metta` (additive, no core changes) plus a
+usage doc, a contribution into a third party's repository.
 
 ## Honesty note
 
 Levels 2 and 3, and the Level-1 shim, describe how Telos connects to OmegaClaw. The pieces
 verified to run in this submission's CI are: the Python goal graph + benchmark + council
 (all green), and the MeTTa file executing on Hyperon (`tests/test_metta.py`). A live
-end-to-end OmegaClaw run requires a configured Hyperon/OmegaClaw instance and is reported as
-"not connected" until one is supplied — by design, so no score is fabricated.
+end-to-end OmegaClaw run has since been done **outside CI** (the live agent scored **0.620
+overall**; see `docs/omegaclaw-metta-load.md` and the README), but the adapter still reports
+"not connected" by **default** until an instance is supplied, by design, so CI fabricates no score.

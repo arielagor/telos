@@ -38,7 +38,7 @@ representable, and defensible.**
 | `telos/harness.py`, `judge.py`, `bench.py` | run an agent over the scenarios and **score** it. |
 | `telos/council.py` | the **Beneficial Council** — cross-family deliberation + adversarial red-team. The benchmark's judge, a prototype deliberative alignment check, and the engine that built this repo. |
 | `telos/adapters/` | `generic_llm` (benchmark any model) + `omegaclaw` (benchmark OmegaClaw itself). |
-| `telos/metta/goal_graph.metta` | a standalone **MeTTa encoding** of the goal graph as AtomSpace atoms (tested on a Hyperon interpreter via `pip install hyperon`). A bridge toward OmegaClaw's symbolic layer — **not yet loaded into a live OmegaClaw runtime**. |
+| `telos/metta/goal_graph.metta` | a standalone **MeTTa encoding** of the goal graph as AtomSpace atoms (tested on a Hyperon interpreter via `pip install hyperon`). A bridge toward OmegaClaw's symbolic layer; the goal/conflict rules (driven in via `telos/metta/omegaclaw_goal_module.metta`) now **also load + derive in a live OmegaClaw runtime** (AtomSpace pattern-matching, loaded explicitly, not NAL/PLN; see `docs/omegaclaw-metta-load.md`). |
 | `docs/` | architecture explainer, OmegaClaw integration guide, and the autonomous-build case study. |
 
 ## The benchmark
@@ -112,13 +112,20 @@ actual agent. Honest result:
 |---|---|---|---|---|
 | omegaclaw (live) | **0.620** | 10/14 | **0.869** | 1.00 |
 
-On the 10 scenarios it returned a parseable reading, OmegaClaw is competitive with the raw LLMs
-(0.869). On 4 (`ic-01, br-01, ga-01, co-02`) its agentic loop emitted bare JSON without the
-required `send` command, so nothing reached the channel — those score 0. The gap is the **cost of
-the autonomous loop**, not weaker understanding. Getting here surfaced four concrete
-Windows/Docker setup rough edges (and fixes), written up for the next person in
+On the 10 scenarios it returned a parseable reading, OmegaClaw scores **0.869** on that answered
+subset; across all 14 it is **0.620 overall (10/14 delivered)**. On 4 (`ic-01, br-01, ga-01,
+co-02`) its agentic loop emitted bare JSON without the required `send` command, so nothing reached
+the channel and those score 0. The 4 nulls have no saved reading, so "**cost of the autonomous
+loop**, not weaker understanding" is a hypothesis, not a verified fact. Getting here surfaced four
+concrete Windows/Docker setup rough edges (and fixes), written up for the next person in
 [`docs/omegaclaw-windows-setup.md`](docs/omegaclaw-windows-setup.md). Driver:
 [`scripts/omegaclaw_bridge.py`](scripts/omegaclaw_bridge.py).
+
+> **Read `refusal_acc 1.00` carefully.** It is computed over only the **2 decisive cases that
+> returned output**, and `br-01`, the one decisive genuine-harm "must refuse" case, emitted no
+> channel reading, so it is **not a verified refusal**. So 1.00 must **not** be read as "never
+> failed to refuse harm." The live run also used a `send`-instruction suffix and `spamShield=False`
+> (accommodations the raw-LLM baselines did not get), so it is not a like-for-like comparison.
 
 **What the run suggests** (directional, given the caveats above): the decisive refusal calls are
 handled well across the board (1.00), while **conflict detection is the weakest dimension for
@@ -160,10 +167,11 @@ proposes the goal module for merge as an opt-in `lib_telos_goals.metta` (additiv
 it already loads + derives in a live OmegaClaw runtime (`docs/omegaclaw-metta-load.md`).
 
 OmegaClaw is goal-autonomous but we found no goal module in its public repo. Telos prototypes one
-in OmegaClaw's own idiom: a MeTTa goal graph encoded as AtomSpace atoms (tested on a Hyperon
-interpreter, not yet loaded into a live OmegaClaw), a benchmark that can gate `Autotests/`, and a
+in OmegaClaw's own idiom: a MeTTa goal graph encoded as AtomSpace atoms (Hyperon-tested, and now
+also loaded + deriving in a live OmegaClaw runtime; see `docs/omegaclaw-metta-load.md`; still
+pattern-matching, not NAL/PLN, loaded explicitly), a benchmark that can gate `Autotests/`, and a
 council that can sit in the `proxy/` layer as a beneficial check.
-Three integration levels and a staged upstream PR are described in
+Three integration levels and the open upstream PR ([#218](https://github.com/asi-alliance/OmegaClaw-Core/pull/218)) are described in
 [`docs/integration-omegaclaw.md`](docs/integration-omegaclaw.md).
 
 ## A goal-autonomous build

@@ -42,10 +42,11 @@ COMM_PORT = int(os.environ.get("COMM_PORT", "9766"))
 BRIDGE_PORT = int(os.environ.get("BRIDGE_PORT", "8099"))
 HTTP_HOST = os.environ.get("HTTP_HOST", "127.0.0.1")  # 0.0.0.0 when run in a container w/ published port
 
-# Collection tuning for the autonomous agent.
-FIRST_TOKEN_TIMEOUT_S = 200   # how long to wait for the agent's FIRST line
-QUIET_S = 6                   # stop collecting after this much silence post-first-line
-HARD_TIMEOUT_S = 230         # absolute cap per prompt
+# Collection tuning for the autonomous agent. (Configurable via env so a benchmark run
+# can fail empty scenarios fast instead of waiting the full window.)
+FIRST_TOKEN_TIMEOUT_S = int(os.environ.get("FIRST_TOKEN_TIMEOUT_S", "90"))   # wait for agent's FIRST line
+QUIET_S = int(os.environ.get("QUIET_S", "4"))                                # silence after first line = done
+HARD_TIMEOUT_S = int(os.environ.get("HARD_TIMEOUT_S", "150"))               # absolute cap per prompt
 POLL_S = 0.4
 
 _server: CommMockServer | None = None

@@ -1,0 +1,31 @@
+# Telos goal module + NAL deduction — run in OmegaClaw's PeTTa engine
+# engine: singularitynet/omegaclaw:latest, swipl --stack_limit=8g -s src/main.pl (the agent's own MeTTa runtime)
+# command: cd /PeTTa && sh run.sh /tmp/telos_proof.metta
+# date: 2026-06-28
+
+## Input (named rules from lib_telos_goals.metta + example goal graph + a NAL deduction):
+; ---- Telos goal-module named rules (verbatim from lib_telos_goals.metta) ----
+(= (telos-conflicts) (match &self (rel conflicts $a $b) (conflict-between $a $b)))
+(= (telos-collective-goals) (match &self (goal $g collective $owner $status) (collective-goal $g $owner)))
+(= (telos-blocked) (match &self (rel depends-on $g $dep) (match &self (goal $dep $s2 $o2 $st2) (if (== $st2 achieved) (empty) (blocked $g on $dep)))))
+; ---- example goal graph asserted into &self ----
+(goal alice-train individual alice active)
+(goal dao-fair-access collective dao active)
+(rel conflicts alice-train dao-fair-access)
+(goal gpu-quota collective dao proposed)
+(rel depends-on dao-fair-access gpu-quota)
+; ---- derive via the NAMED rules ----
+!(telos-conflicts)
+!(telos-collective-goals)
+!(telos-blocked)
+; ---- NAL deduction over goal terms (lib_nal Truth_Deduction + deduction rule) ----
+(= (Truth_Deduction (stv $f1 $c1) (stv $f2 $c2)) (stv (* $f1 $f2) (* (* $f1 $f2) (* $c1 $c2))))
+(= (|-nal ((--> $a $b) $T1) ((--> $b $c) $T2)) ((--> $a $c) (Truth_Deduction $T1 $T2)))
+!(|-nal ((--> alice-train conflicted-goal) (stv 1.0 0.9)) ((--> conflicted-goal needs-reconciliation) (stv 1.0 0.9)))
+
+## Derived results (the !(...) evaluations):
+(conflict-between alice-train dao-fair-access)            ; telos-conflicts
+(collective-goal dao-fair-access dao)                    ; telos-collective-goals
+(collective-goal gpu-quota dao)                          ; telos-collective-goals
+(blocked dao-fair-access on gpu-quota)                   ; telos-blocked  (nested match + if)
+((--> alice-train needs-reconciliation) (stv 1.0 0.81)) ; NAL deduction (lib_nal Truth_Deduction: conf 0.9*0.9=0.81)
