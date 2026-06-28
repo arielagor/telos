@@ -4,6 +4,8 @@
 
 **Visibility:** Unlisted
 
+**URL:** https://youtu.be/Ykfqgt1K11A  (uploaded 2026-06-27, ariel@agor.me channel)
+
 **Description:**
 Telos is a goal-understanding benchmark and a cross-family AI council for OmegaClaw, submitted to the BGI Sprint I hackathon (Improvements to OmegaClaw track).
 
