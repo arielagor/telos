@@ -76,11 +76,13 @@ what it is and isn't:
   two judges. Inter-judge spread (from `results/*.json`): mean **0.08**, median **0.05**, but
   **up to 0.80** on individual (item, dimension) pairs — so small gaps in the table are inside the
   judge noise. **The leaderboard ordering below is not statistically meaningful.**
-- **The live OmegaClaw *agent* was benchmarked** (see "Live OmegaClaw run"), but the Telos **MeTTa
-  module is not yet loaded into its AtomSpace** — it is authored for that runtime
-  (`telos/metta/omegaclaw_goal_module.metta`) and verified standalone on a Hyperon interpreter,
-  and it performs AtomSpace pattern-matching, **not** NAL or PLN inference. Loading it into the
-  live agent so it derives goals symbolically is the next step.
+- **The Telos goal schema now loads into the LIVE OmegaClaw AtomSpace.** We drove the goal/rel
+  atoms + the conflict rule into the running agent via its own `metta` skill, and the query
+  derived `(conflict-between alice-train dao-fair-access)` in OmegaClaw's PeTTa/SWI-Prolog MeTTa
+  engine — not just the standalone Hyperon interpreter. Honest bounds: it is still AtomSpace
+  **pattern-matching, not NAL or PLN inference**, and the schema was loaded explicitly (the
+  example graph), not yet auto-extracted from arbitrary input. So integration level 2 (load the
+  goal graph into the live runtime) is **demonstrated**; the full auto-derive pipeline is next.
 - **No independent human or OmegaClaw-maintainer validation yet.** It was built primarily by AI
   agents (see the case study); that is the experiment, not a quality guarantee.
 

@@ -187,5 +187,8 @@ python -m telos.bench --adapter omegaclaw --judge-families claude,gemini --out r
   can bleed; a per-scenario restart would isolate them but is slow. Noted as a caveat on the run.
 - `gpt-5.4`'s spam-shield mishandling is worth filing upstream (the parser/loop could treat a
   bare JSON reply as an implicit `send`, and tolerate the idle guard better).
-- Loading the Telos MeTTa module into the live AtomSpace at boot (vs. authored-and-tested
-  standalone) is the next integration step toward goal-derivation from arbitrary input.
+- Loading the Telos MeTTa module into the live AtomSpace is **done**: driving the goal/rel atoms
+  + conflict rule through the running agent's `metta` skill, the query derived
+  `(conflict-between alice-train dao-fair-access)` in OmegaClaw's live PeTTa engine (not just
+  standalone Hyperon). Still pattern-matching (not NAL/PLN), and the schema was loaded explicitly.
+  Next: auto-extract goal atoms from arbitrary input so the loaded rules fire on real text.
