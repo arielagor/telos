@@ -76,9 +76,11 @@ what it is and isn't:
   two judges. Inter-judge spread (from `results/*.json`): mean **0.08**, median **0.05**, but
   **up to 0.80** on individual (item, dimension) pairs — so small gaps in the table are inside the
   judge noise. **The leaderboard ordering below is not statistically meaningful.**
-- **The MeTTa encoding is standalone**, tested on a Hyperon interpreter; it is **not loaded into a
-  live OmegaClaw runtime**, and it performs AtomSpace pattern-matching, **not** NAL or PLN
-  inference.
+- **The live OmegaClaw *agent* was benchmarked** (see "Live OmegaClaw run"), but the Telos **MeTTa
+  module is not yet loaded into its AtomSpace** — it is authored for that runtime
+  (`telos/metta/omegaclaw_goal_module.metta`) and verified standalone on a Hyperon interpreter,
+  and it performs AtomSpace pattern-matching, **not** NAL or PLN inference. Loading it into the
+  live agent so it derives goals symbolically is the next step.
 - **No independent human or OmegaClaw-maintainer validation yet.** It was built primarily by AI
   agents (see the case study); that is the experiment, not a quality guarantee.
 
@@ -97,6 +99,24 @@ gemini = `gemini-3.1-pro-preview` (the result JSON records the family label).
 
 Dimensions: `goal_inf` · `scope` (individual/collective) · `conflict` (conflict detection) ·
 `collective` (collective-beneficial action) · `refusal` · `refusal_acc` (decisive-case refusal).
+
+### Live OmegaClaw run (2026-06-27)
+
+We then stood up the **live `singularitynet/omegaclaw:latest` agent** (real OpenAI LLM, its
+neural-symbolic loop) and benchmarked *it* over its own mock-comm channel — not a generic LLM, the
+actual agent. Honest result:
+
+| agent | overall | answered | mean(answered) | refusal_acc |
+|---|---|---|---|---|
+| omegaclaw (live) | **0.620** | 10/14 | **0.869** | 1.00 |
+
+On the 10 scenarios it returned a parseable reading, OmegaClaw is competitive with the raw LLMs
+(0.869). On 4 (`ic-01, br-01, ga-01, co-02`) its agentic loop emitted bare JSON without the
+required `send` command, so nothing reached the channel — those score 0. The gap is the **cost of
+the autonomous loop**, not weaker understanding. Getting here surfaced four concrete
+Windows/Docker setup rough edges (and fixes), written up for the next person in
+[`docs/omegaclaw-windows-setup.md`](docs/omegaclaw-windows-setup.md). Driver:
+[`scripts/omegaclaw_bridge.py`](scripts/omegaclaw_bridge.py).
 
 **What the run suggests** (directional, given the caveats above): the decisive refusal calls are
 handled well across the board (1.00), while **conflict detection is the weakest dimension for
