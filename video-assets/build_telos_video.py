@@ -39,6 +39,9 @@ EDL = {
     "b12": ("cut", "slide-b13.png", 2.6),
     "b13": ("avatar", None, 0.0),
     "b14": ("cut", "slide-b15.png", 2.6),
+    "b14a": ("cut", "slide-b17.png", 2.6),
+    "b14b": ("cut", "slide-b18.png", 2.6),
+    "b14c": ("cut", "slide-b19.png", 2.6),
     "b15": ("avatar", None, 0.0),
 }
 

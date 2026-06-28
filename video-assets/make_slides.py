@@ -390,6 +390,60 @@ def s14():
     save(img, "slide-b15.png")
 
 
+def s_live():  # slide-b17 — live OmegaClaw benchmark
+    img, d, y = base("update · we ran it live", "We benchmarked the live OmegaClaw")
+    rows = [("generic:claude", "0.94", False), ("generic:openai", "0.91", False),
+            ("generic:gemini", "0.90", False), ("omegaclaw  (live agent)", "0.62", True)]
+    x0, y0 = 110, y + 50
+    d.text((x0, y0), "agent", font=font(30, bold=True), fill=CYAN)
+    d.text((x0 + 760, y0), "overall", font=font(30, bold=True), fill=CYAN)
+    for i, (nm, sc, hot) in enumerate(rows):
+        yy = y0 + 60 + i * 76
+        if hot:
+            rounded(d, [x0 - 24, yy - 12, x0 + 1020, yy + 58], 12, fill=SURFACE2)
+        d.text((x0, yy), nm, font=font(40, bold=hot), fill=TEXT if not hot else GREEN)
+        d.text((x0 + 760, yy), sc, font=font(40, bold=True), fill=TEXT if not hot else GREEN)
+    cbx = [1200, y0 + 40, W - 90, y0 + 360]
+    rounded(d, cbx, 18, fill=SURFACE)
+    d.text((1240, y0 + 70), "10 / 14", font=font(72, bold=True), fill=CYAN)
+    d.text((1240, y0 + 156), "scenarios answered cleanly", font=font(30), fill=MUTED)
+    d.text((1240, y0 + 210), "mean 0.869", font=font(48, bold=True), fill=GREEN)
+    d.text((1240, y0 + 270), "— alongside the frontier models", font=font(28), fill=MUTED)
+    d.text((110, H - 150), "The 4 misses: understood, but answered without the agent's `send` command.", font=font(30, semi=True), fill=TEXT)
+    d.text((110, H - 110), "The gap is the cost of the autonomous loop — not weaker goal understanding.", font=font(30, semi=True), fill=TEXT)
+    save(img, "slide-b17.png")
+
+
+def s_setup():  # slide-b18 — setup rough edges fixed
+    img, d, y = base("making it easier to run", "Five rough edges on the way to a live run — all fixed")
+    items = ["MSYS path-mangling crashed the agent on boot  →  MSYS_NO_PATHCONV",
+             "vpnkit broke the mock-comm RPC over host.docker.internal  →  user network",
+             "the RPC only held on the agent's own loopback  →  in-container bridge",
+             "a spam-shield trapped the agent in a loop  →  spamShield=False",
+             "bare replies are dropped (OmegaClaw only speaks via `send`)  →  send-wrap"]
+    bullets(d, items, 110, y + 44, W - 240, size=36, gap=20, dot=GREEN)
+    bx = [90, H - 150, W - 90, H - 70]
+    rounded(d, bx, 14, fill=SURFACE2)
+    d.text((130, H - 134), "Documented for the next person:  docs/omegaclaw-windows-setup.md", font=font(32, bold=True), fill=CYAN)
+    save(img, "slide-b18.png")
+
+
+def s_article():  # slide-b19 — set it free on a real essay
+    img, d, y = base("set it free", "It derived its own goals from a real essay")
+    box = [90, y + 36, W - 90, H - 110]
+    rounded(d, box, 18, fill=SURFACE)
+    d.text((130, y + 64), "Input:  “The World Was Always Talking”  (a real, unstructured article)", font=font(32, semi=True), fill=TEXT)
+    d.text((130, y + 132), "It read the goals  ·  individual vs collective  ·  inferred the unstated  ·  named the conflicts", font=font(28), fill=MUTED)
+    d.text((130, y + 198), "Then it derived ITS OWN goals:", font=font(32, bold=True), fill=CYAN)
+    for i, g in enumerate(["maximize truthful collective value", "preserve epistemic honesty", "do not amplify unverified claims"]):
+        d.ellipse([150, y + 256 + i*54, 164, y + 270 + i*54], fill=VIOLET)
+        d.text((186, y + 248 + i*54), g, font=font(32), fill=TEXT)
+    d.text((130, y + 440), "And it caught itself:", font=font(32, bold=True), fill=GREEN)
+    d.text((420, y + 440), "noticing the text was truncated, it refused to repeat numbers it", font=font(30), fill=TEXT)
+    d.text((420, y + 482), "couldn’t verify — and called for an open field pilot instead.", font=font(30), fill=TEXT)
+    save(img, "slide-b19.png")
+
+
 def s15():
     img = Image.new("RGB", (W, H), BG); d = ImageDraw.Draw(img)
     glow = Image.new("RGB", (W, H), BG); gd = ImageDraw.Draw(glow)
@@ -409,5 +463,7 @@ def s15():
 
 
 if __name__ == "__main__":
-    s01(); s01b(); s02(); s03(); s04(); s05(); s06(); s07(); s08(); s09(); s10(); s11(); s12(); s13(); s14(); s15()
+    s01(); s01b(); s02(); s03(); s04(); s05(); s06(); s07(); s08(); s09(); s10(); s11(); s12(); s13(); s14()
+    s_live(); s_setup(); s_article()
+    s15()
     print("done -> cutaways/")
