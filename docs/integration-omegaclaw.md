@@ -3,6 +3,12 @@
 This document shows exactly how Telos fits into [OmegaClaw-Core](https://github.com/asi-alliance/OmegaClaw-Core)
 — what it plugs into, and what we offer upstream. Both projects are MIT-licensed.
 
+> **Now an open upstream PR:** [asi-alliance/OmegaClaw-Core#218](https://github.com/asi-alliance/OmegaClaw-Core/pull/218)
+> contributes the goal module as an opt-in, side-effect-free `lib_telos_goals.metta` (matching the repo's
+> `lib_*.metta` convention) plus a usage doc — additive, no changes to the core. This is no longer just a
+> design: the module is proposed for merge, and it already loads + derives in a live OmegaClaw runtime
+> (see `docs/omegaclaw-metta-load.md`).
+
 ## What OmegaClaw gives us to build on
 
 From the OmegaClaw-Core repository (89% Python + a MeTTa symbolic layer):

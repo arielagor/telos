@@ -155,6 +155,10 @@ the deeper AtomSpace integration.
 
 ## How it fits OmegaClaw
 
+**Open upstream PR:** [asi-alliance/OmegaClaw-Core#218](https://github.com/asi-alliance/OmegaClaw-Core/pull/218)
+proposes the goal module for merge as an opt-in `lib_telos_goals.metta` (additive, no core changes), and
+it already loads + derives in a live OmegaClaw runtime (`docs/omegaclaw-metta-load.md`).
+
 OmegaClaw is goal-autonomous but we found no goal module in its public repo. Telos prototypes one
 in OmegaClaw's own idiom: a MeTTa goal graph encoded as AtomSpace atoms (tested on a Hyperon
 interpreter, not yet loaded into a live OmegaClaw), a benchmark that can gate `Autotests/`, and a
