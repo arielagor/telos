@@ -1,0 +1,22 @@
+{
+  "name": "deep-projects",
+  "mood": "futuristic, credible, neuro-symbolic, sharp",
+  "fonts": {
+    "serif": "Orbitron",
+    "sans": "DM Sans",
+    "googleHref": "https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,400..600&display=swap"
+  },
+  "colors": {
+    "bg": "#08070f",
+    "bg-2": "#0d0c1a",
+    "surface": "#16142a",
+    "text": "#ecedfb",
+    "text-dim": "#aaa8cc",
+    "text-strong": "#ffffff",
+    "accent": "#8b5cf6",
+    "accent-lt": "#c9bcff",
+    "accent-2": "#38bdf8",
+    "accent-3": "#ec4899"
+  },
+  "ribbon": ["#8b5cf6", "#38bdf8", "#ec4899", "#c9bcff", "#22d3ee", "#a78bfa"]
+}

@@ -1,0 +1,181 @@
+<main id="snap" style="scroll-snap-type:y proximity">
+
+  <!-- HERO -->
+  <section class="slide scene center" data-bg="">
+    <div class="bg"></div>
+    <div class="veil"></div>
+    <div class="inner">
+      <div class="eyebrow reveal">BGI Sprint I &middot; Improvements to OmegaClaw</div>
+      <h1 class="reveal d1">Telos <em>goals, measured</em></h1>
+      <p class="lede reveal d2" style="max-width:46ch;margin:30px auto 0">A benchmark and toolkit for agents that understand our <em>individual and collective</em> goals. Built for OmegaClaw, and tested on the live agent.</p>
+    </div>
+    <div class="cue reveal d4">Scroll<div class="line"></div></div>
+  </section>
+
+  <!-- STAKES: the gap -->
+  <section class="slide scene" data-bg="">
+    <div class="bg"></div>
+    <div class="veil" style="background:linear-gradient(90deg, rgba(var(--veil),.85), rgba(var(--veil),.25) 70%)"></div>
+    <div class="inner">
+      <div class="eyebrow reveal">The gap</div>
+      <div class="huge reveal d1">0</div>
+      <p class="lede reveal d2 mt" style="max-width:44ch">goal-representation modules in the public OmegaClaw-Core repo. It is <em>goal-autonomous</em>, yet nothing names what the goals are. That is exactly where a capable agent is most dangerous when it is subtly wrong.</p>
+    </div>
+  </section>
+
+  <!-- RUNG 1 -->
+  <section class="slide rung">
+    <div class="bg"></div>
+    <div class="veil"></div>
+    <div class="inner">
+      <div class="reveal">
+        <div class="tier">Failure mode 01</div>
+        <div class="stack"><span class="chip">literal <b>vs</b> real</span></div>
+      </div>
+      <div class="reveal d1">
+        <div class="rungq">It does what you <em>said</em>, not what you <em>meant</em>.</div>
+        <p class="cap mt">Pursuing the literal request while missing the real goal. A normal task benchmark scores this as a success.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RUNG 2 -->
+  <section class="slide rung">
+    <div class="bg"></div>
+    <div class="veil"></div>
+    <div class="inner">
+      <div class="reveal">
+        <div class="tier">Failure mode 02</div>
+        <div class="stack"><span class="chip alt">one <b>vs</b> all</span></div>
+      </div>
+      <div class="reveal d1">
+        <div class="rungq">It serves <em>one</em> person and externalises the cost onto <em>everyone</em>.</div>
+        <p class="cap mt">Individual-vs-collective conflict, or a Goodhart proxy that harms the very thing it stood for.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RUNG 3 -->
+  <section class="slide rung">
+    <div class="bg"></div>
+    <div class="veil"></div>
+    <div class="inner">
+      <div class="reveal">
+        <div class="tier">Failure mode 03</div>
+        <div class="stack"><span class="chip">authority <b>&ne;</b> legitimacy</span></div>
+      </div>
+      <div class="reveal d1">
+        <div class="rungq">It obeys a <em>manipulated</em> majority against a legitimate individual.</div>
+        <p class="cap mt">Collective overreach. A paternalistic optimiser that overrides people &ldquo;for their own good&rdquo; fails here too.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCK: the goal graph -->
+  <section class="slide block">
+    <div class="wrap">
+      <div class="kicker reveal">The representation</div>
+      <h2 class="reveal d1" style="max-width:18ch">A goal graph, not a vibe</h2>
+      <p class="body reveal d2 mt">Individual and collective goals, four relation types (<em>supports, conflicts, subsumes, depends-on</em>), progress and blocking, and an individual&harr;collective alignment score. A small, dependency-free stakeholder-aware goal module, in OmegaClaw&rsquo;s own AtomSpace idiom.</p>
+      <div class="stack mt">
+        <span class="chip"><b>goal</b> &middot; individual | collective</span>
+        <span class="chip alt"><b>rel</b> &middot; supports | conflicts | subsumes | depends-on</span>
+        <span class="chip"><b>alignment</b> &middot; individual &harr; collective</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH: the benchmark -->
+  <section class="slide tech">
+    <div class="wrap">
+      <div class="stepnum reveal">01</div>
+      <div class="kicker reveal" style="margin-top:10px">The benchmark</div>
+      <h2 class="reveal d1" style="max-width:20ch">14 scenarios, 7 categories</h2>
+      <p class="body reveal d2 mt">Each hands the agent a situation and asks for a <em>goal reading</em>: the goals it sees, the conflicts, the recommended beneficial action, and whether it refuses. The set resists the obvious degenerate policies &mdash; always-refuse fails the benign twins, always-flag fails the false-conflict guard, paternalism fails category 7. Scored by a cross-family council, with each agent&rsquo;s own family excluded from its jury.</p>
+      <div class="metrics reveal d2">
+        <div class="metric"><div class="n">14</div><div class="l">hand-authored scenarios</div></div>
+        <div class="metric"><div class="n">7</div><div class="l">goal-understanding categories</div></div>
+        <div class="metric"><div class="n">3</div><div class="l">judge families (Claude, Gemini, OpenAI)</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAKES: the live run -->
+  <section class="slide scene" data-bg="">
+    <div class="bg"></div>
+    <div class="veil" style="background:linear-gradient(90deg, rgba(var(--veil),.85), rgba(var(--veil),.25) 70%)"></div>
+    <div class="inner">
+      <div class="eyebrow reveal">We ran it for real</div>
+      <div class="huge reveal d1">0.620</div>
+      <p class="lede reveal d2 mt" style="max-width:46ch">the <em>live</em> OmegaClaw agent, benchmarked over its own channel. <em>0.869</em> on the 10 of 14 it answered cleanly. The four it missed produced an answer its loop never sent &mdash; the cost of the autonomous loop, a gap we name rather than hide.</p>
+    </div>
+  </section>
+
+  <!-- TECH: live engine derivation + NAL -->
+  <section class="slide tech">
+    <div class="wrap">
+      <div class="stepnum reveal">02</div>
+      <div class="kicker reveal" style="margin-top:10px">Runs in the engine</div>
+      <h2 class="reveal d1" style="max-width:22ch">The module derives in OmegaClaw&rsquo;s own MeTTa engine</h2>
+      <p class="body reveal d2 mt">Not a design doc. The named rules &mdash; <em>conflict, collective-goal, blocked</em> &mdash; derive inside the running PeTTa engine. And one step past pattern-matching: a Non-Axiomatic Logic deduction over goal terms returns a real computed truth value.</p>
+      <div class="stack mt reveal d2">
+        <span class="chip"><b>(conflict-between</b> alice-train dao-fair-access)</span>
+        <span class="chip"><b>(blocked</b> dao-fair-access on gpu-quota)</span>
+        <span class="chip alt"><b>NAL</b> (--&gt; alice-train needs-reconciliation) (stv 1.0 0.81)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCK: the open PR -->
+  <section class="slide block">
+    <div class="wrap">
+      <div class="kicker reveal">Offered upstream</div>
+      <h2 class="reveal d1" style="max-width:20ch">An open pull request to OmegaClaw-Core</h2>
+      <p class="body reveal d2 mt"><em>#218</em> contributes the goal module as an opt-in <code>lib_telos_goals.metta</code> &mdash; additive, no core changes, tested on Hyperon, and already deriving in the live engine. It is there for the maintainers to review. That is the difference between describing an integration and shipping one.</p>
+      <div class="stack mt">
+        <span class="chip"><b>open</b> &middot; asi-alliance/OmegaClaw-Core #218</span>
+        <span class="chip alt"><b>additive</b> &middot; one new lib, 0 core changes</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCK: set free on the article -->
+  <section class="slide block">
+    <div class="wrap">
+      <div class="kicker reveal">Set free</div>
+      <h2 class="reveal d1" style="max-width:22ch">Pointed at a real essay, it derived its own goals</h2>
+      <p class="body reveal d2 mt">We turned the live agent loose on a published article under the Telos framing. It read the text, surfaced the <em>individual</em> and <em>collective</em> goals on its own, and refused to amplify claims it could not verify &mdash; beneficial refusal without being asked.</p>
+    </div>
+  </section>
+
+  <!-- SAYS: the honest part -->
+  <section class="slide block">
+    <div class="wrap">
+      <div class="kicker reveal">The honest part</div>
+      <h2 class="reveal d1" style="max-width:24ch">A benchmark that flatters itself is worse than useless</h2>
+      <div class="says">
+        <div class="say reveal d1"><div class="q">N = 14, public, hand-authored. It measures broad competence, not adversarial robustness.</div><div class="meta">scope</div></div>
+        <div class="say reveal d2"><div class="q">The labels are council-authored. The same family helped write the scenarios and judge &mdash; a real circularity.</div><div class="meta">circularity</div></div>
+        <div class="say reveal d3"><div class="q">Before submitting, the council red-teamed its own work and made us walk back our own overclaims.</div><div class="meta">self-audit</div></div>
+      </div>
+      <div class="legend reveal d3">
+        <span><span class="sw" style="background:var(--accent-2)"></span>Hyperon CI</span>
+        <span><span class="sw" style="background:var(--accent)"></span>live PeTTa engine</span>
+        <span><span class="sw" style="background:var(--accent-3)"></span>open PR #218</span>
+        <span><span class="sw" style="background:var(--accent-lt)"></span>next: NAL/PLN pipeline</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="slide scene center" data-bg="">
+    <div class="bg"></div>
+    <div class="veil"></div>
+    <div class="inner">
+      <div class="kicker reveal">The ask</div>
+      <h2 class="reveal d1" style="max-width:20ch;margin-inline:auto">Goal understanding is a safety property. So <em>measure</em> it.</h2>
+      <p class="signoff reveal d2 mt">Built by a goal-autonomous council under human oversight. The one thing we cannot do ourselves: your review of #218.</p>
+    </div>
+  </section>
+
+</main>
