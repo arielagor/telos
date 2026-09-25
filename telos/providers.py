@@ -29,8 +29,9 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 # Newest SOTA model per family, resolved at import from env overrides (so the toolkit
-# tracks "newest available" without a code change). Defaults verified live 2026-06-26.
-CLAUDE_MODEL = os.environ.get("TELOS_CLAUDE_MODEL", "claude-opus-4-8")
+# tracks "newest available" without a code change). Defaults verified live 2026-06-26;
+# Claude bumped to Opus 5.5 on 2026-09-25 (live in the Max-plan ledger).
+CLAUDE_MODEL = os.environ.get("TELOS_CLAUDE_MODEL", "claude-opus-5-5")
 GEMINI_MODEL = os.environ.get("TELOS_GEMINI_MODEL", "gemini-3.1-pro-preview")
 OPENAI_MODEL = os.environ.get("TELOS_OPENAI_MODEL", "gpt-5.5")
 
