@@ -37,6 +37,8 @@ video-assets/_qa_*.png
 # OmegaClaw live-run artifacts
 ig01_payload.json
 results/*.err
+results/**/*.err
+video-assets/heygen/render.log
 results/baselines.log
 /PeTTa/
 article_payload.json
