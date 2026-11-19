@@ -32,7 +32,9 @@ from typing import Optional
 # tracks "newest available" without a code change). Defaults verified live 2026-06-26;
 # Claude bumped to Opus 5.5 on 2026-09-25 (live in the Max-plan ledger).
 CLAUDE_MODEL = os.environ.get("TELOS_CLAUDE_MODEL", "claude-opus-5-5")
-GEMINI_MODEL = os.environ.get("TELOS_GEMINI_MODEL", "gemini-3.1-pro-preview")
+# Default moved to Gemini 4 Neon on 2026-11-18 (frontier judge seat). The 2026-06-26 pilot in
+# results/ ran on gemini-3.1-pro-preview; set TELOS_GEMINI_MODEL to reproduce it exactly.
+GEMINI_MODEL = os.environ.get("TELOS_GEMINI_MODEL", "gemini-4-neon")
 OPENAI_MODEL = os.environ.get("TELOS_OPENAI_MODEL", "gpt-5.5")
 
 DEFAULT_TIMEOUT = int(os.environ.get("TELOS_TIMEOUT", "240"))

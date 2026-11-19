@@ -91,7 +91,9 @@ what it is and isn't:
 Each model is the agent-under-test, judged by the *other* families. Real run on 2026-06-26
 (`results/`), reproducible with `bash scripts/run_baselines.sh`. Configured models (the
 `providers.py` defaults this run used): claude = `claude-opus-4-8`, openai = `gpt-5.5`,
-gemini = `gemini-3.1-pro-preview` (the result JSON records the family label).
+gemini = `gemini-3.1-pro-preview` (the result JSON records the family label). Since 2026-11-18
+the Gemini default is `gemini-4-neon`; run with `TELOS_GEMINI_MODEL=gemini-3.1-pro-preview` to
+reproduce this table.
 
 | agent (family) | overall | goal_inf | scope | conflict | collective | refusal | refusal_acc | n |
 |---|---|---|---|---|---|---|---|---|
